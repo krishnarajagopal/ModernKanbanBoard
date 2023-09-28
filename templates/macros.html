@@ -333,3 +333,114 @@
 </div>
 
 {% endmacro %}
+<!--Macro to create a Login form modal -->
+{% macro login_modal(login_form) %}
+<div class="modal fade" id="LoginModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Login Screen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/login" class="needs-validation" method="post" novalidate>
+                <div class="modal-body">
+                    <div class="mb-3 required">
+                        <label class="form-label" for="email">Email</label>
+                        <input type="email" class="form-control overflow-auto" id="email" name="email" value=""
+                            required>
+                        <div class="invalid-feedback">
+                            Please enter valid email address
+                        </div>
+                        <div class="valid-feedback">
+                            Looks Good
+                        </div>
+                    </div>
+
+                    <div class="mb-3 required">
+                        <label class="form-label" for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" value="" required>
+                        <div class="invalid-feedback">
+                            Please enter a Password
+                        </div>
+                        <div class="valid-feedback">
+                            Looks Good
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+{% endmacro %}
+
+<!--Macro to create register form modal -->
+{% macro register_modal(register_form) %}
+<div class="modal fade" id="RegisterModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Register Screen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/register" class="needs-validation" method="post" novalidate>
+                <div class="modal-body">
+
+                    <div class="mb-3 required">
+                        <label class="form-label" for="firstname">User Name</label>
+                        <input type="text" class="form-control overflow-auto" id="firstname" name="firstname" value="" placeholder="Firstname"
+                            required>
+                        <div class="invalid-feedback">
+                            Please enter valid User Name
+                        </div>
+                        <div class="valid-feedback">
+                            Looks Good
+                        </div>
+                    </div>
+
+                    <div class="mb-3 required">
+                        <label class="form-label" for="lastname">Last Name</label>
+                        <input type="text" class="form-control overflow-auto" id="lastname" name="lastname" value="" placeholder="Lastname"
+                            required>
+                        <div class="invalid-feedback">
+                            Please enter valid Last Name
+                        </div>
+                        <div class="valid-feedback">
+                            Looks Good
+                        </div>
+                    </div>
+
+                    <div class="mb-3 required">
+                        <label class="form-label" for="email">Email</label>
+                        <input type="email" class="form-control overflow-auto" id="email" name="email" value="" placeholder="firstlastname@example.com"
+                            required>
+                        <div class="invalid-feedback">
+                            Please enter valid email address
+                        </div>
+                        <div class="valid-feedback">
+                            Looks Good
+                        </div>
+                    </div>
+
+                    <div class="mb-3 required">
+                        <label class="form-label" for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" value="" placeholder="Password" required>
+                        <div class="invalid-feedback">
+                            Please enter a Password
+                        </div>
+                        <div class="valid-feedback">
+                            Looks Good
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endmacro %}

@@ -1,0 +1,17 @@
+{% from 'macros.html' import login_modal,register_modal %}
+<nav class="navbar navbar-expand-lg navbar-light bg-primary-subtle">
+  <a class="navbar-brand ms-5 h5" href="{{url_for('home')}}">Kanban Board</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end me-5" id="navbarNav">
+    <button class="btn btn-primary mx-3" type="button" data-bs-toggle="modal"
+      data-bs-target="#LoginModal">Login</button>
+    <button class="btn btn-secondary " type="button" data-bs-toggle="modal"
+      data-bs-target="#RegisterModal">Register</button>
+  </div>
+{{login_modal(login_form)}}
+{{register_modal(register_form)}}
+
+</nav>

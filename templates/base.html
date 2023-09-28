@@ -18,6 +18,7 @@
 </head>
 
 <body>
+  {% include 'partials/_navbar.html' %}
   {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
   {% set counter=0 %}
