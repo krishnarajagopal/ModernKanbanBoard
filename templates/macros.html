@@ -388,7 +388,7 @@
             </div>
             <form action="/register" class="needs-validation" method="post" novalidate>
                 <div class="modal-body">
-
+                    {{ register_form.csrf_token() }}
                     <div class="mb-3 required">
                         <label class="form-label" for="firstname">User Name</label>
                         <input type="text" class="form-control overflow-auto" id="firstname" name="firstname" value="" placeholder="Firstname"

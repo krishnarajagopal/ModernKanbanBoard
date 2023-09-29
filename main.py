@@ -1,4 +1,5 @@
 import json
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Flask, render_template, request, redirect, url_for, flash,jsonify
 from flask_login import LoginManager,UserMixin,login_user,login_required,logout_user,current_user
 from flask_bootstrap import Bootstrap5
@@ -171,10 +172,7 @@ class login_form(FlaskForm):
 #     title = StringField(label='Title')
 #     submit = SubmitField(label='Delete Task')
 
-def get_tasks():
-    result = db.session.execute(db.select(Task).order_by(Task.due_date))
-    all_db_tasks = result.scalars()
-    return all_db_tasks
+
 
 @app.route('/', methods=['GET','POST'])
 def home():
@@ -210,7 +208,6 @@ def home():
        return redirect(url_for("home"))
         # data = json.dumps(form.errors, ensure_ascii=False)
         # return jsonify(data)
-
 
 @app.route('/postmethod', methods = ['POST'])
 def post_status_update_data():
@@ -259,7 +256,6 @@ def add():
         flash(message=f"Book Name : {new_task.title} Added successfully", category="alert-success")
         return redirect(url_for('home'))
 
-
 @app.route("/delete", methods=["POST"])
 def delete():
     """
@@ -286,6 +282,73 @@ def delete():
     db.session.commit()
     flash(message= f"Book Name : {task_to_delete.title} Deleted successfully",category="alert-danger")
     return redirect(url_for('home'))
+
+# A register route for the API
+@app.route("/register", methods=["POST"])
+def register():
+    """
+    Registers a new user in the database.
+
+    This function is triggered when a POST request is made to the "/register" endpoint of the API.
+    It retrieves the form data from the request form, and then creates a new user object with the
+    form data. The user object is then added to the database using the SQLAlchemy ORM. Finally, a
+    flash message is displayed to indicate the successful creation of the user, and the user is
+    redirected to the login page.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+    """
+    form=register_form()
+    if request.method == "POST":
+        firstname = str(form.firstname.data)
+        lastname = str(form.lastname.data)
+        new_user=User(
+        username = f"{firstname.capitalize()} {lastname.capitalize()}",
+        password = generate_password_hash(password=form.password.data, method='pbkdf2:sha256', salt_length=16),
+        email = form.email.data,)
+        # user_json = new_user.serialize()
+        # print(json.dumps(user_json, indent=4))
+        db.session.add(new_user)
+        db.session.commit()
+        flash(message= f"User Name : {new_user.username} Created successfully",category="alert-success")
+        return redirect(url_for('home'))
+
+# A login route for the API
+@app.route("/login", methods=["GET","POST"])
+def login():
+    """
+    Login function for handling user authentication.
+    
+    Parameters:
+    - None
+    
+    Returns:
+    - None
+    
+    Description:
+    This function is responsible for handling the user login process. It receives a POST request with the user's email and password, and checks if the provided credentials are correct. If the credentials are correct, the user is redirected to the home page. If the credentials are incorrect, appropriate error messages are flashed and the user is redirected to the home page.
+    """   
+    if request.method == "GET" and not current_user.is_authenticated:
+
+        return redirect(url_for('home',user_logged_in=False))
+    elif request.method == "POST":
+        form=login_form()
+        email=str(form.email.data)
+        password=str(form.password.data)
+        user=User.query.filter_by(email=email).first()
+        if user:
+            if check_password_hash(user.password, password):
+                flash(message= f"User Name : {user.username} Logged in successfully",category="alert-success")
+                return redirect(url_for('home',user_logged_in=True))
+            else:
+                flash(message= f"User Name : {user.username} Password Incorrect",category="alert-danger")
+                return redirect(url_for('home'))
+        else:
+            flash(message= f"User Name : {user.username} Email Incorrect",category="alert-danger")
+            return redirect(url_for('home'))
 
 if __name__ == "__main__":
     app.run(debug=True, port=5002)
