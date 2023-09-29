@@ -181,20 +181,24 @@ class login_form(FlaskForm):
 
 
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/', methods=['GET'])
 def home():
     form=update_task_form()
-    if request.method == 'GET':
-        all_tasks=Task.query.all()
-        all_users=User.query.all()
-        #    print(all_tasks)
-        # # print(all_users) and all_tasks in json format
-        # tasks_data=[task.serialize() for task in all_tasks]
-        # users_data=[user.serialize() for user in all_users]
-        # print(json.dumps(users_data,indent=4))
-        # print ( f"tasks_json:  {json.dumps(tasks_data,indent=4)}")
-        return render_template('index.html',tasks=list(all_tasks),form=form,login_form=login_form(),register_form=register_form())
-    elif  request.method=='POST' and form.validate_on_submit():
+    all_tasks=Task.query.all()
+    all_users=User.query.all()
+    #    print(all_tasks)
+    # # print(all_users) and all_tasks in json format
+    # tasks_data=[task.serialize() for task in all_tasks]
+    # users_data=[user.serialize() for user in all_users]
+    # print(json.dumps(users_data,indent=4))
+    # print ( f"tasks_json:  {json.dumps(tasks_data,indent=4)}")
+    return render_template('index.html',tasks=list(all_tasks),form=form,login_form=login_form(),register_form=register_form())
+
+@app.route('/', methods=['POST'])
+@login_required
+def update_task():
+    form=update_task_form()
+    if  request.method=='POST' and form.validate_on_submit():
         task_id=request.form.get('id')
         task_to_edit = db.get_or_404(Task, task_id)
         print(f'Task ID to DB: {task_id}')
@@ -217,6 +221,7 @@ def home():
         # return jsonify(data)
 
 @app.route('/postmethod', methods = ['POST'])
+@login_required
 def post_status_update_data():
     jsdata = request.get_json(force=True,)
     print (f"\nID: {jsdata['id']},\nStatus: {jsdata['status']}")
@@ -228,6 +233,7 @@ def post_status_update_data():
     return jsonify({'status':'success'})
     
 @app.route("/add", methods=[ "POST"])
+@login_required
 def add():
     """
     Add a new task to the database.
@@ -264,6 +270,7 @@ def add():
         return redirect(url_for('home'))
 
 @app.route("/delete", methods=["POST"])
+@login_required
 def delete():
     """
     Delete a task from the database.
@@ -360,6 +367,7 @@ def login():
 
 # A logout route for the API
 @app.route("/logout", methods=["POST"])
+@login_required
 def logout():
     current_user_name=current_user.username
     logout_user()

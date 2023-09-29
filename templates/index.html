@@ -12,10 +12,10 @@
     <p>Not logged in</p>
     {%endif%} -->
     <div class="row flex-row flex-sm-nowrap p-1 m-1">
-        {{ create_container_cards("TO DO",tasks) }}
-        {{ create_container_cards("IN PROGRESS",tasks) }}
-        {{ create_container_cards("REVIEW",tasks) }}
-        {{ create_container_cards("COMPLETE",tasks) }}
+        {{ create_container_cards("TO DO",tasks,current_user) }}
+        {{ create_container_cards("IN PROGRESS",tasks,current_user) }}
+        {{ create_container_cards("REVIEW",tasks,current_user) }}
+        {{ create_container_cards("COMPLETE",tasks,current_user) }}
     </div>
 </div>
 
