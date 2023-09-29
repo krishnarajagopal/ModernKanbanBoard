@@ -9,7 +9,7 @@
         <div class="card-body">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12 d-flex">
+                    <div class="col-md-12 d-flex m-3">
                         <h6 id="STATUS_{{container_name.replace(' ','_')}}"
                             class="card-title text-center text-uppercase col-sm-9 col-12">{{container_name}}</h6>
                         {% if current_user.is_authenticated %}
@@ -37,7 +37,7 @@
             {%endif%}
             {% for task in data_list %}
             {% if task.status== container_name %}
-            <div class="items ">
+            <div class="items">
                 <div class="flip-card card draggable" draggable="true" id="cd{{task.id}}" ondragstart="drag(event)">
                     <div class="flip-card-inner ">
                         <div class="flip-card-front  mb-2">
