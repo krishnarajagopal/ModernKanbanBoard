@@ -6,9 +6,9 @@
 {% block content %}
 <div class="container-fluid pt-3">
    {%if current_user.is_authenticated %}
-    <div class="small ms-4 ">Drag and drop between swim lanes</div>
+    <div class="small mx-4 ">Drag and drop between swim lanes</div>
     {%else%}
-    <div class="small ms-4 bg-danger-subtle ">Login to drag and drop between swim lanes</div>
+    <div class="small mx-4 bg-danger-subtle ">Login to drag and drop between swim lanes</div>
     {%endif%}
     <div class="row flex-row flex-sm-nowrap p-1 m-1">
         {{ create_container_cards("TO DO",tasks,current_user) }}
