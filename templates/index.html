@@ -5,12 +5,11 @@
 
 {% block content %}
 <div class="container-fluid pt-3">
-    <div class="small ms-4">Drag and drop between swim lanes</div>
-    <!-- {% if current_user.is_authenticated %}
-    <p>username: {{current_user.username}} user id: {{current_user.id}} login User authenticated: {{current_user.is_authenticated()}}</p>
+   {%if current_user.is_authenticated %}
+    <div class="small ms-4 ">Drag and drop between swim lanes</div>
     {%else%}
-    <p>Not logged in</p>
-    {%endif%} -->
+    <div class="small ms-4 bg-danger-subtle ">Login to drag and drop between swim lanes</div>
+    {%endif%}
     <div class="row flex-row flex-sm-nowrap p-1 m-1">
         {{ create_container_cards("TO DO",tasks,current_user) }}
         {{ create_container_cards("IN PROGRESS",tasks,current_user) }}

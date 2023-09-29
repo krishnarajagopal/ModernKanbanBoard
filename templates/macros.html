@@ -21,18 +21,20 @@
                         </div>
                         {%else%}
                         <div class="col-sm-3 col-12 flex justify-content-end">
-                            <span  class="d-inline-block" tabindex="0" data-bs-toggle="tooltip"
+                            <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip"
                                 title="Please login to add a task">
-                                <button class="btn btn-secondary btn-xs mx-1 w-100" type="button" disabled>ADD +</button>
+                                <button class="btn btn-primary btn-xs mx-1 w-100" type="button" disabled>ADD +</button>
                             </span>
                         </div>
                         {%endif%}
                     </div>
                 </div>
             </div>
+            {% if current_user.is_authenticated %}
             <div class="dropzone rounded" ondragleave="clearDrop(event)" ondragover="allowDrop(event)"
                 ondrop="drop(event)"> &nbsp;
             </div>
+            {%endif%}
             {% for task in data_list %}
             {% if task.status== container_name %}
             <div class="items ">
@@ -73,7 +75,7 @@
                                     {{task.description}}
                                 </p>
                                 <div class="d-flex flex-row justify-content-center">
-
+                                    {%if current_user.is_authenticated %}
 
                                     <button type="button" class="btn btn-primary btn-xs mx-1" role="button"
                                         data-bs-toggle="modal" data-bs-target="#UpdateNewModal_task_{{task.id}}">
@@ -85,15 +87,37 @@
                                         data-bs-toggle="modal" data-bs-target="#DeleteModal_task_{{task.id}}">
                                         Delete
                                     </button>
+
+                                    {%else%}
+
+                                    <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip"
+                                        title="Login to edit">
+                                        <button type="button" class="btn btn-primary btn-xs mx-1" role="button"
+                                            data-bs-toggle="modal" data-bs-target="#UpdateNewModal_task_{{task.id}}"
+                                            disabled>
+                                            Edit
+                                        </button>
+                                    </span>
+                                    <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip"
+                                        title="Login to delete">
+                                        <button type="button" class="btn btn-danger btn-xs mx-1" role="button"
+                                            data-bs-toggle="modal" data-bs-target="#DeleteModal_task_{{task.id}}"
+                                            disabled>
+                                            Delete
+                                        </button>
+                                    </span>
+                                    {%endif%}
                                 </div>
                             </div>
                         </div>
                     </div>
 
                 </div>
+               {% if current_user.is_authenticated %}
                 <div class="dropzone rounded" ondragleave="clearDrop(event)" ondragover="allowDrop(event)"
                     ondrop="drop(event)"> &nbsp;
                 </div>
+                {%endif%}
             </div>
             {% endif %}
             {% endfor %}
