@@ -358,5 +358,13 @@ def login():
             flash(message= f"User Name : {user.username} Email Incorrect",category="alert-danger")
             return redirect(url_for('home'))
 
+# A logout route for the API
+@app.route("/logout", methods=["POST"])
+def logout():
+    current_user_name=current_user.username
+    logout_user()
+    flash(message= f"User Name : {current_user_name} Logged out successfully",category="alert-success")
+    return redirect(url_for('home'))
+
 if __name__ == "__main__":
     app.run(debug=True, port=5002)
