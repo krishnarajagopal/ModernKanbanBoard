@@ -445,3 +445,33 @@
     </div>
 </div>
 {% endmacro %}
+
+<!-- Macro to create a Logout modal for the logged in user -->
+{% macro logout_modal (login_form,current_user) %}
+<div class="modal fade" id="LogoutModal" tabindex="-1">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Logout</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/logout"  method="post" novalidate>
+                <div class="modal-body">
+
+                    {{ login_form.csrf_token() }}
+                    <h6>Are you sure you want to logout user: {{current_user.username}}?</h6>
+                    <div class="mb-3 required">
+                        <label class="form-label visually-hidden"" for="LogoutUser{{current_user.id}}">ID</label>
+                        <input type="text" class="visually-hidden" readonly class="form-control-plaintext" id="LogoutUser{{current_user.id}}"
+                            name="id" value="{{current_user.id}}">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">Logout</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endmacro %}
