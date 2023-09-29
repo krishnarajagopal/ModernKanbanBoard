@@ -1,4 +1,4 @@
-import json
+import json, os
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Flask, render_template, request, redirect, url_for, flash,jsonify
 from flask_login import LoginManager,UserMixin,login_user,login_required,logout_user,current_user
@@ -31,8 +31,9 @@ from flask_wtf.csrf import CSRFProtect
 # '''
 db = SQLAlchemy()
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///new_defects_collection.db"
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+# app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///new_defects_collection.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URI", "sqlite:///new_defects_collection.db")
+app.config['SECRET_KEY'] = os.environ.get('FLASK_KEY')
 csrf = CSRFProtect(app)
 db.init_app(app)
 bootstrap = Bootstrap5(app)
@@ -362,7 +363,7 @@ def login():
                 flash(message= f"User Name : {user.username} Password Incorrect",category="alert-danger")
                 return redirect(url_for('home'))
         else:
-            flash(message= f"User Name : {user.username} Email Incorrect",category="alert-danger")
+            flash(message= f"User Name : {email} Email Incorrect",category="alert-danger")
             return redirect(url_for('home'))
 
 # A logout route for the API
