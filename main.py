@@ -46,7 +46,7 @@ login_manager.login_message_category = 'alert-danger'
 #Create User_Loader callback
 @login_manager.user_loader
 def load_user(user_id):
-    return db.get_or_404(User, id=user_id)
+    return db.get_or_404(User, user_id)
 
 class Task(db.Model):
     __tablename__ = 'tasks'
@@ -72,6 +72,11 @@ class User(db.Model):
             'email': self.email,
             # Include other attributes as needed
         }
+    def is_active(self):
+        return True
+    def get_id(self):
+        return str(self.id)
+    
 
 faker_status=DynamicProvider(
     provider_name="task_status",
@@ -331,18 +336,19 @@ def login():
     Description:
     This function is responsible for handling the user login process. It receives a POST request with the user's email and password, and checks if the provided credentials are correct. If the credentials are correct, the user is redirected to the home page. If the credentials are incorrect, appropriate error messages are flashed and the user is redirected to the home page.
     """   
+    form=login_form()
     if request.method == "GET" and not current_user.is_authenticated:
 
         return redirect(url_for('home',user_logged_in=False))
     elif request.method == "POST":
-        form=login_form()
         email=str(form.email.data)
         password=str(form.password.data)
         user=User.query.filter_by(email=email).first()
         if user:
             if check_password_hash(user.password, password):
                 flash(message= f"User Name : {user.username} Logged in successfully",category="alert-success")
-                return redirect(url_for('home',user_logged_in=True))
+                login_user(user,remember=True)
+                return redirect(url_for('home'))
             else:
                 flash(message= f"User Name : {user.username} Password Incorrect",category="alert-danger")
                 return redirect(url_for('home'))

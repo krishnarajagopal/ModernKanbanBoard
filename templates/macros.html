@@ -344,6 +344,7 @@
             </div>
             <form action="/login" class="needs-validation" method="post" novalidate>
                 <div class="modal-body">
+                    {{ login_form.csrf_token()}}
                     <div class="mb-3 required">
                         <label class="form-label" for="email">Email</label>
                         <input type="email" class="form-control overflow-auto" id="email" name="email" value=""
