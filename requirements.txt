@@ -32,6 +32,7 @@ flask-swagger==0.2.14
 Flask-Table==0.5.0
 Flask-WTF==1.1.1
 greenlet==2.0.2
+gunicorn==21.2.0
 h11==0.14.0
 idna==3.4
 image==1.5.33
