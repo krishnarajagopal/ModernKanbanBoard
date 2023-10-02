@@ -37,7 +37,7 @@ app.config['SECRET_KEY'] = os.environ.get('FLASK_KEY')
 csrf = CSRFProtect(app)
 db.init_app(app)
 bootstrap = Bootstrap5(app)
-
+print(f"SECTRET KEY: {app.config['SECRET_KEY']}")
 #initialize login manager and configure it
 login_manager = LoginManager()
 login_manager.init_app(app)
