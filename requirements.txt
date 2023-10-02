@@ -20,7 +20,7 @@ email-validator==1.1.2
 exceptiongroup==1.1.2
 Faker==18.13.0
 faker_sqlalchemy==0.10.2208140
-Flask==2.3.2
+Flask==2.2.5
 flask-babel==3.1.0
 Flask-Bcrypt==1.0.1
 Flask-Login==0.6.2
