@@ -33,7 +33,7 @@ db = SQLAlchemy()
 app = Flask(__name__)
 # app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///new_defects_collection.db"
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URI", "sqlite:///new_defects_collection.db")
-app.config['SECRET_KEY'] = os.environ.get('FLASK_KEY')
+app.config['SECRET_KEY'] = os.environ.get('FLASK_KEY','a255ad13a5989ca11b626b2f12925c1e')
 csrf = CSRFProtect(app)
 db.init_app(app)
 bootstrap = Bootstrap5(app)
