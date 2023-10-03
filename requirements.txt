@@ -48,7 +48,7 @@ packaging==23.1
 pandas==2.0.2
 Pillow==10.0.0
 polling2==0.5.0
-psycopg2==2.9.8
+psycopg2-binary==2.9.8
 pycparser==2.21
 Pygments==2.16.1
 PyMySQL==1.0.2
